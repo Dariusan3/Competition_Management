@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
+
 namespace Competition_Management.Controllers
 {
     public class PlayerController : Controller
@@ -57,7 +58,13 @@ namespace Competition_Management.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.TeamDropdown = new SelectList(_context.Teams.ToList(), "Id", "TeamName");
+            var teams = _context.Teams.ToList();
+            //Team team_free_contract = new Team{
+            //    Id = 0,
+            //    TeamName = "Free Contract",
+            //};
+            //teams.Add(team_free_contract);
+            ViewBag.TeamDropdown = new SelectList(teams, "Id", "TeamName");
             //ViewBag.TeamDropdown.Insert(0, new SelectListItem { Text = "--Select Team--", Value = "" });
                
             return View();
@@ -66,6 +73,7 @@ namespace Competition_Management.Controllers
         [HttpPost]
         public IActionResult Create(Player player, IFormFile file)
         {
+
             if (file != null)
             {
                 byte[] byteArray;
@@ -75,6 +83,10 @@ namespace Competition_Management.Controllers
                     byteArray = memoryStream.ToArray();
                 }
                 player.Photo = byteArray;
+            }
+            if(player.TeamId == 0)
+            {
+                player.TeamId = null;
             }
             _context.Players.Add(player);
             _context.SaveChanges();

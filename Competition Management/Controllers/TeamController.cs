@@ -51,6 +51,18 @@ namespace Competition_Management.Controllers
         [HttpPost]
         public IActionResult Create(Team team, int[] playerIds, IFormFile file)
         {
+            foreach(Team t in _context.Teams.ToList())
+            {
+                if (t.TeamName.ToLower().CompareTo(team.TeamName.ToLower()) == 0)
+                {
+                    ModelState.AddModelError("TeamName", "Ai introdus un nume pentru echipa deja existent");
+                    List<Player> allPlayers = _context.Players.ToList();
+                    List<Player> availablePLayers = GetAvailablePlayers(allPlayers);
+                    availablePLayers = availablePLayers.OrderBy(x => x.LastName).ToList();
+                    ViewData["AllAvailablePlayers"] = availablePLayers;
+                    return View();
+                }
+            }
             if (file != null)
             {
                 byte[] byteArray;
@@ -60,14 +72,6 @@ namespace Competition_Management.Controllers
                     byteArray = memoryStream.ToArray();
                 }
                 team.Sigla = byteArray;
-            }
-
-            foreach (Team t in _context.Teams)
-            {
-                if (t.TeamName.ToLower().CompareTo(team.TeamName.ToLower()) == 0)
-                {
-                    return View();
-                }
             }
 
             foreach (var playerId in playerIds)

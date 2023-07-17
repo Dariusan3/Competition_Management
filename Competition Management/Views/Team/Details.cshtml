@@ -6,8 +6,15 @@
 
 <h1>Details</h1>
 
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6v8B8s1fek8LGp8gYU4lGJqbsb4MN" crossorigin="anonymous">
+
 <div>
     <h4>Team</h4>
+    @if (Model.Sigla != null)
+    {
+        <img src="data:image;base64, @Convert.ToBase64String(Model.Sigla)" alt="Photo" class="img-fluid" />
+    }
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -43,44 +50,35 @@
     Players in @Html.DisplayFor(model => model.TeamName)
 </h2>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Players.First().LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Players.First().FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Players.First().Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Players.First().Team)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Players)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Team.TeamName)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
+@if (Model.Players.Count > 0)
+{
+    <div class="row">
+        @foreach (var player in Model.Players)
+        {
+            <div class="col-md-2 mb-4">
+                <div class="card">
+                    @if(player.Photo != null)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <img src="data:image;base64, @Convert.ToBase64String(player.Photo)" class="card-img-top rounded-circle" alt="Player Photo" style="height: 80px; width: 80px; object-fit: cover;" />
+                        </div>
+                    }
+                    
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@player.LastName @player.FirstName</h5>
+                        <p class="card-text">Age: @player.Age</p>
+                        <!-- Add other player details as needed -->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No players available in this team.</p>
+}
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

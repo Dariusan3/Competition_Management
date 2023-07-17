@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Competition_Management.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Competition_Management.Models;
@@ -9,6 +10,7 @@ namespace Competition_Management.Models;
 [Table("Team")]
 public partial class Team
 {
+
     [Key]
     [Column("ID")]
     public int Id { get; set; }
