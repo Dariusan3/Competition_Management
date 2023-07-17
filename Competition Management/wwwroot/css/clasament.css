@@ -1,0 +1,47 @@
+﻿
+
+body {
+   
+}
+
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #343a40;
+    color: #fff;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+tbody tr:nth-child(even) {
+   /* background-color: #f8f9fa;*/
+    /*background-image: url('images/cover_clasament.png');
+    background-size: cover;*/
+}
+
+/* Team Column Styles */
+.team-name {
+    display: flex;
+    align-items: center;
+}
+
+.team-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* Hover Effect */
+tbody tr:hover {
+    background-color: #e9ecef;
+}

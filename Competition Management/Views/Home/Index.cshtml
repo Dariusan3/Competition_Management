@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Competition_Management.Models.Competition>
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('images/football_back.jpg');
+        background-size: cover;
+        overflow: hidden;
+    }
+    h1{
+        color: black ;
+    }
+
+</style>
+
+<link href="/css/competition.css" rel="stylesheet" />
+
+
+<div class="text-center">
+    <h1 class="display-4">Competition Management</h1>
+</div>
+
+@*<img src="images/slider_img_1.jpg"/>
+<img src="images/slider_img_2.jpeg"/>
+<img src="images/slider_img_3.jpg"/>*@
+
+
+<body>
+<div class="container">
+    <div class="row">
+        @foreach (var competition in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card competition-card">
+                    @if (competition.Logo != null)
+                    {
+                        <img src="data:image;base64, @Convert.ToBase64String(competition.Logo)" class="card-img-top competition-logo"  alt="Logo" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@competition.CompetitionName</h5>
+                        <p class="card-text">Other competition details...</p>
+                        <a asp-action="Clasament" asp-controller="Competition" asp-route-id="@competition.Id">Clasament</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>
+
+
+
+
+

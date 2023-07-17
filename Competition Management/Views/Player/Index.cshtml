@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Competition_Management.Models.Player>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<link rel="stylesheet" href="~/css/player.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="index-container">
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <label>Find by name:</label>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilterString as string, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Find by Team:</label>
+          @Html.DropDownList("SearchTeam", ViewBag.Teams as SelectList, "Select Team", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+}
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("SortByName", "Index", new { sortOrder = ViewBag.NameSortParam })
+                    @if (ViewBag.NameSortParam == "name_desc")
+                    {
+                        <span class="fas fa-sort-up"></span>
+                    }
+                    else if (ViewBag.NameSortParam == "LastName")
+                    {
+                        <span class="fas fa-sort-down"></span>
+                    }
+                </th>
+              
+                <th>
+                    @Html.ActionLink("SortByAge", "Index", new { sortOrder = ViewBag.AgeSortParam })
+                    @if (ViewBag.AgeSortParam == "age_desc")
+                    {
+                        <span class="fas fa-sort-up"></span>
+                    }
+                    else if (ViewBag.AgeSortParam == "Age")
+                    {
+                        <span class="fas fa-sort-down"></span>
+                    }
+                </th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="player-list">
+            @foreach (var item in Model)
+            {
+                <tr class="player-item">
+                    <td>
+                    @if (item.Photo != null)
+                    {
+                        <img src="data:image;base64, @Convert.ToBase64String(item.Photo)" style="height: 50px" alt="Photo" />
+                    }
+                    else{
+                            <img src="~/images/nophoto.jpg" alt="Photo" class="img-fluid" />
+                    }
+                    </td>
+                    <td class="player-name">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td class="player-name">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td class="player-team">
+                        @(item.Team != null ? Html.DisplayFor(modelItem => item.Team.TeamName) : "Free Contract")
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+

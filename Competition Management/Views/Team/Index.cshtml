@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Competition_Management.Models.Team>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="/css/team_index.css" rel="stylesheet" />
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="create-new-link">Create New</a>
+</p>
+
+
+<body>
+<div class="container">
+   <div class="row">
+@foreach (var item in Model) {
+    <div class="col-md-3 mb-4">
+          <div class="competition-card">
+             <div class="card-body">
+                <h5 class="card-title">@item.TeamName</h5>
+              </div>
+               @if (item.Sigla != null)
+              {
+                <img src="data:image;base64, @Convert.ToBase64String(item.Sigla)" class="card-img-top competition-logo" alt="Logo" />
+              }
+            <div class="card-body">
+                @Html.DisplayFor(modelItem => item.AwardNr)
+            </div>
+            <div class="card-body">
+                @Html.DisplayFor(modelItem => item.Motto)
+            </div>
+            <div class="card-body">
+                @item.CreatedOn.GetValueOrDefault().Date.ToString("yyyy-MM-dd")
+            
+            </div>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </div>
+     </div>
+}
+</div>
+</div>
+</body>

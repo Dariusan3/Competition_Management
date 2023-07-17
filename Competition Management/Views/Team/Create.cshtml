@@ -1,0 +1,63 @@
+﻿@model Competition_Management.Models.Team
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Team</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TeamName" class="control-label"></label>
+                <input asp-for="TeamName" class="form-control" />
+                <span asp-validation-for="TeamName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AwardNr" class="control-label"></label>
+                <input asp-for="AwardNr" class="form-control" />
+                <span asp-validation-for="AwardNr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motto" class="control-label"></label>
+                <input asp-for="Motto" class="form-control" />
+                <span asp-validation-for="Motto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedOn" class="control-label"></label>
+                <input asp-for="CreatedOn" class="form-control" />
+                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Select Players:</label><br />
+                @foreach (var player in (IEnumerable<Competition_Management.Models.Player>)ViewData["AllAvailablePlayers"])
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="teamCheckbox-@player.Id" name="playerIds" value="@player.Id" />
+                        <label class="form-check-label" for="teamCheckbox-@player.Id">@player.LastName</label>
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Sigla" class="control-label"></label>
+                <input type="file" asp-for="Sigla" class="form-control-file" name="file" />
+                <span asp-validation-for="Sigla" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
