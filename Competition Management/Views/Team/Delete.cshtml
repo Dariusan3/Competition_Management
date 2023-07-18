@@ -6,40 +6,66 @@
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this team?</h3>
+
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+            @if (Model.Sigla != null)
+            {
+                <img src="data:image;base64, @Convert.ToBase64String(Model.Sigla)" alt="Photo" class="img-fluid" height="200px" width="200px" />
+            }
+
+
+            <strong style="margin-left:25px">@Model.TeamName</strong>
+        </a>
+    </div>
+</div>
+
+<div style="padding-top:20px">
+@if (Model.Players.Count > 0)
+{
+    <div class="row">
+        @foreach (var player in Model.Players)
+        {
+            <div class="col-md-2 mb-4">
+                <div class="card">
+                    @if (player.Photo != null)
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <img src="data:image;base64, @Convert.ToBase64String(player.Photo)" class="card-img-top rounded-circle" alt="Player Photo" style="height: 80px; width: 80px; object-fit: cover;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <img src="~/images/nophoto.jpg" class="card-img-top rounded-circle" alt="Player Photo" style="height: 80px; width: 80px; object-fit: cover;" />
+                        </div>
+
+                    }
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@player.LastName @player.FirstName</h5>
+                        <p class="card-text">Age: @player.Age</p>
+                        <a asp-controller="Player" asp-action="Details" asp-route-id="@player.Id" class="btn btn-primary my-2">Player details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No players available in this team.</p>
+}
+
+</div>
+
+
 <div>
-    <h4>Team</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AwardNr)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AwardNr)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Motto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Motto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-    </dl>
-    
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </form>
 </div>

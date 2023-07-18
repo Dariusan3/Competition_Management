@@ -4,9 +4,21 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit this team</h1>
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+            @if (Model.Sigla != null)
+            {
+                <img src="data:image;base64, @Convert.ToBase64String(Model.Sigla)" alt="Photo" class="img-fluid" height="200px" width="200px" />
+            }
 
-<h4>Team</h4>
+
+            <strong style="margin-left:25px">@Model.TeamName</strong>
+        </a>
+    </div>
+</div>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,16 +45,15 @@
                 <input asp-for="CreatedOn" class="form-control" />
                 <span asp-validation-for="CreatedOn" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:20px">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -299,13 +299,20 @@ else
                     {
                         <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
                             <img src="data:image;base64, @Convert.ToBase64String(player.Photo)" class="card-img-top rounded-circle" alt="Player Photo" style="height: 80px; width: 80px; object-fit: cover;" />
-                        </div>
+                         </div>
                     }
+                   else
+                   {
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                            <img src="~/images/nophoto.jpg" class="card-img-top rounded-circle" alt="Player Photo" style="height: 80px; width: 80px; object-fit: cover;" />
+                        </div>
+                                
+                   }
                     
                     <div class="card-body text-center">
                         <h5 class="card-title">@player.LastName @player.FirstName</h5>
                         <p class="card-text">Age: @player.Age</p>
-                        <!-- Add other player details as needed -->
+                        <a asp-controller="Player" asp-action="Details" asp-route-id="@player.Id" class="btn btn-primary my-2">Player details</a>
                     </div>
                 </div>
             </div>

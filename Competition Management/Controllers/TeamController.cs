@@ -92,7 +92,7 @@ namespace Competition_Management.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Team team = _context.Teams.Find(id);
+            Team team = _context.Teams.Include(t => t.Players).SingleOrDefault(t => t.Id == id);
             if (team == null)
             {
                 return NotFound();
