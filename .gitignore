@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Competition Management.sln
+/Competition Management/Views/Shared/_Layout.cshtml.css
+/Competition Management/Views/Shared/_Layout.cshtml.css

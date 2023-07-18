@@ -182,7 +182,7 @@ namespace Competition_Management.Controllers
 
         public IActionResult Details(int? id)
         {
-            Competition competition = _context.Competitions.Include(c => c.CompetitionTypeNavigation).Include(c => c.Games).ThenInclude(g => g.Team1).Include(c => c.Games).ThenInclude(g => g.Team2).SingleOrDefault(c => c.Id == id);
+            Competition competition = _context.Competitions.Include(c => c.Teams).Include(c => c.CompetitionTypeNavigation).Include(c => c.Games).ThenInclude(g => g.Team1).Include(c => c.Games).ThenInclude(g => g.Team2).SingleOrDefault(c => c.Id == id);
             if (competition == null)
             {
                 return NotFound();

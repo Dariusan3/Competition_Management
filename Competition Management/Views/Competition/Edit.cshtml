@@ -4,10 +4,40 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>Competition</h4>
-<hr />
+<style>
+    .image-container {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+    }
+
+        .image-container img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+</style>
+
+<h1>Edit this competition</h1>
+
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+            @if (Model.Logo != null)
+            {
+                <div class="image-container">
+                    <img src="data:image;base64, @Convert.ToBase64String(Model.Logo)" alt="Photo" class="img-fluid" />
+                </div>
+            }
+
+
+
+            <strong style="margin-left:25px">@Model.CompetitionName</strong>
+        </a>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
@@ -27,26 +57,14 @@
                 <input asp-for="CompetitionName" class="form-control" />
                 <span asp-validation-for="CompetitionName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
+         
+
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Logo" class="control-label"></label>
-                <input type="file" asp-for="Logo" class="form-control-file" name="file" value="@ViewBag.MyLogo"/>
-                <span asp-validation-for="Logo" class="text-danger"></span>
-            </div>
+           
             @*<div class="form-group">
                 <label>Add new Teams:</label><br />
                 @foreach (var team in (IEnumerable<Competition_Management.Models.Team>)ViewData["AllAvailableTeams"])
@@ -57,18 +75,16 @@
                     </div>
                 }
             </div>*@
-            <div>
-               <a asp-action="Create" asp-controller="Game" asp-route-CompId="@Model.Id" asp-area="" class="btn btn-primary">Create New Game</a>
-            </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:20px">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
             
         </form>
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="padding-top:20px">
     <div class="col-md-4">
         <form asp-action="GenerateGames" asp-controller="Competition" asp-route-id="@Model.Id">
             <div class="form-group">
@@ -78,9 +94,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
