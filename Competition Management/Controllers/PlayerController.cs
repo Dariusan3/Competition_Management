@@ -22,7 +22,14 @@ namespace Competition_Management.Controllers
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.AgeSortParam = sortOrder == "Age" ? "age_desc" : "Age";
-            ViewBag.Teams = new SelectList(_context.Teams.ToList(), "Id", "TeamName");
+            var teams = _context.Teams.ToList();
+            Team team_free_contract = new Team
+            {
+                Id = -1,
+                TeamName = "Free Contract",
+            };
+            teams.Add(team_free_contract);
+            ViewBag.Teams = new SelectList(teams, "Id", "TeamName");
             var players = from p in _context.Players.Include(p => p.Team) select p;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -30,9 +37,13 @@ namespace Competition_Management.Controllers
                 players = players.Where(p => p.LastName.Contains(searchString)
                 || p.FirstName.Contains(searchString));
             }
-            if (searchTeam != null && searchTeam != 0)
+            if (searchTeam != null && searchTeam != 0 && searchTeam != -1)
             {
                 players = players.Where(p => p.TeamId == searchTeam);
+            }
+            if(searchTeam == -1)
+            {
+                players = players.Where(p => p.TeamId == null);
             }
 
             //players = players.Where(p => p.Team.TeamName.Contains(searchTeam));
@@ -59,11 +70,12 @@ namespace Competition_Management.Controllers
         public IActionResult Create()
         {
             var teams = _context.Teams.ToList();
-            //Team team_free_contract = new Team{
-            //    Id = 0,
-            //    TeamName = "Free Contract",
-            //};
-            //teams.Add(team_free_contract);
+            Team team_free_contract = new Team
+            {
+                Id = -1,
+                TeamName = "Free Contract",
+            };
+            teams.Add(team_free_contract);
             ViewBag.TeamDropdown = new SelectList(teams, "Id", "TeamName");
             //ViewBag.TeamDropdown.Insert(0, new SelectListItem { Text = "--Select Team--", Value = "" });
                
@@ -84,7 +96,7 @@ namespace Competition_Management.Controllers
                 }
                 player.Photo = byteArray;
             }
-            if(player.TeamId == 0)
+            if(player.TeamId == -1)
             {
                 player.TeamId = null;
             }
