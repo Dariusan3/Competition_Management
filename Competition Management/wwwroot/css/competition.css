@@ -13,7 +13,8 @@
     }
 
 .competition-logo {
-    height: 100px;
+    height: 65px;
+    width: 65px;
     object-fit: cover;
 }
 
