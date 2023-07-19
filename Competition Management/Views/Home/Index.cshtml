@@ -7,14 +7,13 @@
 
 <style>
     body {
-        margin: 0;
-        padding: 0;
+            
         background-image: url('images/football_back.jpg');
         background-size: cover;
-        overflow: hidden;
+        
     }
     h1{
-        color: black ;
+        color: white ;
     }
 
 </style>
@@ -42,10 +41,14 @@
                     {
                         <img src="data:image;base64, @Convert.ToBase64String(competition.Logo)" class="card-img-top competition-logo"  alt="Logo" />
                     }
+                    else{
+                            <img src="~/images/no_photo_template.jpg" class="card-img-top competition-logo" alt="Logo" />
+                    }
                     <div class="card-body">
                         <h5 class="card-title">@competition.CompetitionName</h5>
                         <p class="card-text">Other competition details...</p>
-                        <a asp-action="Clasament" asp-controller="Competition" asp-route-id="@competition.Id">Clasament</a>
+                            <a asp-action="Clasament" asp-controller="Competition" asp-route-id="@competition.Id" class="btn btn-info">Leaderboard</a>
+                            <a asp-action="Details" asp-controller="Competition" asp-route-id="@competition.Id" class="btn btn-success">Details</a>
                     </div>
                 </div>
             </div>

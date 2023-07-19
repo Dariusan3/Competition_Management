@@ -18,12 +18,16 @@ public partial class Player
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? LastName { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? FirstName { get; set; }
 
+    [Required]
+    [Range(1, 60)]
     public int? Age { get; set; }
 
     public byte[]? Photo { get; set; }

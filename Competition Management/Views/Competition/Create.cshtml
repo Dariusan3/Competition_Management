@@ -40,12 +40,12 @@
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:15px">
                 <label asp-for="Logo" class="control-label"></label>
                 <input type="file" asp-for="Logo" class="form-control-file" name="file"/>
                 <span asp-validation-for="Logo" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:15px">
                 <label>Select Teams:</label><br />
                 @foreach (var team in (IEnumerable<Competition_Management.Models.Team>)ViewData["AllTeams"])
                 {
@@ -55,16 +55,14 @@
                     </div>
                 }
             </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:20px">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

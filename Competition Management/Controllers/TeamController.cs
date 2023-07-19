@@ -55,13 +55,22 @@ namespace Competition_Management.Controllers
             {
                 if (t.TeamName.ToLower().CompareTo(team.TeamName.ToLower()) == 0)
                 {
-                    ModelState.AddModelError("TeamName", "Ai introdus un nume pentru echipa deja existent");
+                    ModelState.AddModelError("TeamName", "Another team already has this name");
                     List<Player> allPlayers = _context.Players.ToList();
                     List<Player> availablePLayers = GetAvailablePlayers(allPlayers);
                     availablePLayers = availablePLayers.OrderBy(x => x.LastName).ToList();
                     ViewData["AllAvailablePlayers"] = availablePLayers;
                     return View();
                 }
+            }
+            if(playerIds.Length > 15)
+            {
+                ModelState.AddModelError("Select Free Contract players:", "Your team must can not take more than 15 players");
+                List<Player> allPlayers = _context.Players.ToList();
+                List<Player> availablePLayers = GetAvailablePlayers(allPlayers);
+                availablePLayers = availablePLayers.OrderBy(x => x.LastName).ToList();
+                ViewData["AllAvailablePlayers"] = availablePLayers;
+                return View();
             }
             if (file != null)
             {

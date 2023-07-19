@@ -17,16 +17,20 @@ public partial class Competition
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? CompetitionName { get; set; }
 
     [Column(TypeName = "date")]
+    [Required]
     public DateTime? StartDate { get; set; }
 
     [Column(TypeName = "date")]
+    [Required]
     public DateTime? EndDate { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? Location { get; set; }
 
     public byte[]? Logo { get; set; }

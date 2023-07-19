@@ -2,6 +2,7 @@
 using Competition_Management.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 
 namespace Competition_Management.Controllers
@@ -90,5 +91,27 @@ namespace Competition_Management.Controllers
             }
             return View(game);
         }
+
+        //[HttpGet]
+        //public IActionResult Edit(int? id)
+        //{
+        //    Game game = _context.Games.Include(j => j.Team1).Include(j => j.Team2).Include(j => j.Competition).SingleOrDefault(j => j.Id == id);
+        //    if (game == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(game);
+        //}
+
+        //[HttpPost]
+        //public IActionResult Edit(int id)
+        //{
+        //    Game game = _context.Games.Include(j => j.Team1).Include(j => j.Team2).Include(j => j.Competition).SingleOrDefault(j => j.Id == id);
+        //    Competition competition = _context.Competitions.Find(game.CompetitionId);
+        //    int compId = competition.Id;
+        //    //_context.Add(game);
+        //    //_context.SaveChanges();
+        //    return RedirectToAction("Details", "Competition", new { id = compId });
+        //}
     }
 }

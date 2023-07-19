@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6v8B8s1fek8LGp8gYU4lGJqbsb4MN" crossorigin="anonymous">
 <link href="/css/competition.css" rel="stylesheet" />
 
-<h1>Teams Presentation</h1>
+<h1>Competitions Presentation</h1>
 
 <p style="padding-bottom:10px">
     <a class="btn btn-primary" asp-action="Create">Create New</a>
@@ -24,6 +24,10 @@
                             @if (item.Logo != null)
                             {
                                 <img src="data:image;base64, @Convert.ToBase64String(item.Logo)" class="card-img-top competition-logo" alt="Logo" />
+                            }
+                            else
+                            {
+                                <img src="images/no_photo_template.jpg" class="card-img-top competition-logo" alt="Logo" />
                             }
                             <h5 class="team-name">@item.CompetitionName</h5>
                         </div>

@@ -158,15 +158,6 @@
     </svg>
 
     <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-@*        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-                id="bd-theme"
-                type="button"
-                aria-expanded="false"
-                data-bs-toggle="dropdown"
-                aria-label="Toggle theme (auto)">
-            <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-        </button>*@
         <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
             <li>
                 <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
@@ -221,7 +212,7 @@
 
 
 
-                    <strong style="margin-left:25px">@Model.CompetitionName</strong>
+                    <h3 style="margin-left:25px">@Model.CompetitionName</h3>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -235,48 +226,90 @@
         <section class="py-1 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Album example</h1>
-                    <p class="lead text-body-secondary">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+                    <h1 class="fw-light">@Model.CompetitionName</h1>
+                    <p class="lead text-body-secondary">The wait is over the competition has begun</p>
                     <p>
-                        <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                        <form asp-action="GenerateGames" asp-controller="Competition" asp-route-id="@Model.Id">
+                            <div class="form-group">
+                                <input type="submit" value="Generate Games" class="btn btn-primary" />
+                            </div>
+                        </form>
+                        <a asp-action="Index" asp-controller="Competition" class="btn btn-secondary my-2">Go to competitions</a>
                     </p>
                 </div>
             </div>
         </section>
-
-        @foreach (var game in Model.Games)
+        <h3 style="padding-bottom:20px">The games that are played</h3>
+        @if(Model.Games.Count() > 0)
         {
-        <div class="game-card">
-            <div class="col-md-3">
-                    @if (game.Team1.Sigla != null)
-                    {
-                        <div class="team-logo-container">
-                            <img src="data:image;base64, @Convert.ToBase64String(game.Team1.Sigla)" alt="Team Logo" class="team-logo" />
-                        </div>
-                    }
-                <h4>@game.Team1.TeamName</h4>
-               
-            </div>
-            <div class="col-md-3">
-                <h3 class="text-center">@game.Team1Goals - @game.Team2Goals</h3>
-            </div>
-            <div class="col-md-3">
-                @if (game.Team2.Sigla != null)
-                {
-                    <div class="team-logo-container">
-                        <img src="data:image;base64, @Convert.ToBase64String(game.Team2.Sigla)" alt="Team Logo" class="team-logo" />
+            @foreach (var game in Model.Games)
+            {
+                <div class="game-card">
+                    <div class="col-md-3">
+                        @if (game.Team1.Sigla != null)
+                        {
+                            <div class="team-logo-container">
+                                <img src="data:image;base64, @Convert.ToBase64String(game.Team1.Sigla)" alt="Team Logo" class="team-logo" />
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="~/images/no_photo_team.jpg" alt="Photo" class="team-logo" />
+                        }
+                        <h4>@game.Team1.TeamName</h4>
+
                     </div>
-                }
-                <h4>@game.Team2.TeamName</h4>
-            </div>
-                <div class="col-md-3 text-center">
-                    <p>@game.Date.GetValueOrDefault().Date.ToString("dd-MM-yyyy")</p>
-                    <p>@game.Stadium</p>
+                    <div class="col-md-3">
+                        @if (game.Team1Goals != null && game.Team2Goals != null)
+                        {
+                            <h3 class="text-center">@game.Team1Goals - @game.Team2Goals</h3>
+                        }
+                        else
+                        {
+                            <form asp-controller="Competition" asp-action="SetScores" asp-route-id="@Model.Id" asp-route-id="@game.Id">
+                                <div class="form-group">
+                                    <label for="@game.Team1Goals">Team 1 Goals</label>
+                                    <input type="number" class="form-control" id="Team1Goals" name="Team1Goals" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="@game.Team2Goals">Team 2 Goals</label>
+                                    <input type="number" class="form-control" id="Team2Goals" name="Team2Goals" />
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Scores</button>
+                            </form>
+
+                        }
+
+                    </div>
+                    <div class="col-md-3">
+                        @if (game.Team2.Sigla != null)
+                        {
+                            <div class="team-logo-container">
+                                <img src="data:image;base64, @Convert.ToBase64String(game.Team2.Sigla)" alt="Team Logo" class="team-logo" />
+                            </div>
+                        }
+                        else
+                        {
+                            <img src="~/images/no_photo_team.jpg" alt="Photo" class="team-logo" />
+                        }
+                        <h4>@game.Team2.TeamName</h4>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <p>@game.Date.GetValueOrDefault().Date.ToString("dd-MM-yyyy")</p>
+                        <p>@game.Stadium</p>
+                    </div>
+                    @*<div class="col-md-1">
+            <a asp-controller="Game" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-info">Edit Scores</a>
+            </div>*@
+
                 </div>
-               
-        </div>
+            }
         }
+        else
+        {
+            <h3>No games have been played</h3>
+        }
+
 
     </main>
 

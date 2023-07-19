@@ -236,12 +236,8 @@ else
             </p>
        </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
+          <h4>Stadium</h4>
+          <p style="font-size:18px">@Model.Stadium</p>
         </div>
       </div>
     </div>
@@ -253,9 +249,12 @@ else
         {
             <img src="data:image;base64, @Convert.ToBase64String(Model.Sigla)" alt="Photo" class="img-fluid" height="200px" width="200px" />
         }
+        else{
+            <img src="~/images/no_photo_team.jpg" alt="Photo" class="img-fluid" height="200px" width="200px" />
+        }
         
        
-      <strong style="margin-left:25px">@Model.TeamName</strong>
+      <h3 style="margin-left:25px">@Model.TeamName</h3>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -269,11 +268,11 @@ else
   <section class="py-1 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Album example</h1>
-        <p class="lead text-body-secondary">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <h1 class="fw-light">@Model.TeamName</h1>
+        <p class="lead text-body-secondary">@Model.Motto</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          <a asp-action="Index" asp-controller="Player" class="btn btn-success my-2">Recruit players</a>
+          <a asp-action="Index" asp-controller="Competition" class="btn btn-secondary my-2">Go to competitions</a>
         </p>
       </div>
     </div>
@@ -312,7 +311,7 @@ else
 }
 else
 {
-    <p>No players available in this team.</p>
+    <h3>No players available in this team.</h3>
 }
 
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>

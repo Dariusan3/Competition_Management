@@ -27,22 +27,27 @@ public partial class Game
     public int? CompetitionId { get; set; }
 
     [Column(TypeName = "datetime")]
+    [Required]
     public DateTime? Date { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? Stadium { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? Team1Name { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? Team2Name { get; set; }
 
     [StringLength(255)]
     [Unicode(false)]
+    [Required]
     public string? CompetetitionName { get; set; }
 
     [ForeignKey("CompetitionId")]

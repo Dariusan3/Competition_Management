@@ -298,6 +298,7 @@ namespace Competition_Management.Controllers
                         Team2Id = teams[j].Id,
                         Team1Goals = goalsTeam1,
                         Team2Goals = goalsTeam2,
+                        Stadium = teams[i].Stadium,
                     };
                     goalsTeam1 = random1.Next(0, 4);
                     goalsTeam2 = random1.Next(0, 2);
@@ -309,6 +310,7 @@ namespace Competition_Management.Controllers
                         Team2Id = teams[i].Id,
                         Team1Goals = goalsTeam1,
                         Team2Goals = goalsTeam2,
+                        Stadium = teams[j].Stadium,
                     };
 
                     games.Add(game1);
@@ -334,6 +336,16 @@ namespace Competition_Management.Controllers
 
             _context.SaveChanges();
 
+            return RedirectToAction("Details", new { id = competition.Id });
+        }
+
+        [HttpPost]
+        public IActionResult SetScores(int compId, int gameId)
+        {
+            Competition competition = _context.Competitions.Include(c => c.Teams).Include(c => c.CompetitionTypeNavigation).Include(c => c.Games).ThenInclude(c => c.Team1).Include(c => c.Games).ThenInclude(c => c.Team2).SingleOrDefault(c => c.Id == compId);
+            Game game = _context.Games.Include(j => j.Team1).Include(j => j.Team2).Include(j => j.Competition).SingleOrDefault(j => j.Id == gameId);
+            competition.Games.Add(game);
+            _context.SaveChanges();
             return RedirectToAction("Details", new { id = competition.Id });
         }
 

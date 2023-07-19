@@ -15,6 +15,10 @@
             {
                 <img src="data:image;base64, @Convert.ToBase64String(Model.Sigla)" alt="Photo" class="img-fluid" height="200px" width="200px" />
             }
+            else
+            {
+                <img src="~/images/no_photo_team.jpg" alt="Photo" class="img-fluid" height="200px" width="200px" />
+            }
 
 
             <strong style="margin-left:25px">@Model.TeamName</strong>
